@@ -24,3 +24,6 @@ https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/installing.html
 
 Hazel Cast Jet Tutorial
 https://jet-start.sh/docs/tutorials/cdc
+
+Drawing Draw . io
+https://app.diagrams.net/
