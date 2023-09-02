@@ -22,4 +22,14 @@ https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/installing.html
 Hazel Cast Jet Tutorial
 https://jet-start.sh/docs/tutorials/cdc
 
+Customer Table
+CREATE TABLE `customers` (
+  `id` int NOT NULL,
+  `first_name` varchar(255) COLLATE latin1_bin DEFAULT NULL,
+  `last_name` varchar(255) COLLATE latin1_bin DEFAULT NULL,
+  `email` varchar(255) COLLATE latin1_bin DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+
+Data in the attahed CSV file.
 
