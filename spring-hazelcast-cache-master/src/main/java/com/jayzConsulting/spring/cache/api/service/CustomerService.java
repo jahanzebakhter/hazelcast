@@ -1,7 +1,12 @@
 package com.jayzConsulting.spring.cache.api.service;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.annotation.PostConstruct;
 
@@ -58,7 +63,7 @@ public class CustomerService {
 
 	@Cacheable(value = "customerCache", key = "#id", unless = "#result==null")
 	public Optional<Customer> getCustomer(int id) {
-		System.out.println("Hit DB 1st time in getCustomer()");
+		System.out.println("Hit DB 1st time in getCustomer(). With Customer Id:" + id);
 		return repository.findById(id);
 	}
 
@@ -66,9 +71,26 @@ public class CustomerService {
 	
 
 	@Cacheable(value = "customerDependentCacheWithCustomerIdAsKey", key = "#customerId", unless = "#result==null")
-	public CustomerDependent[] getCutomerDependentByCustomerId(int customerId) {
-		System.out.println("Hit DB 1st time in getCustomerDependentByCustomerId()");
-		return m_customerDependentDao.getCutomerDependentByCustomerId(customerId);
+	public Map<Integer, CustomerDependent> 
+			getCutomerDependentByCustomerId(int customerId) {
+		System.out.println("Hit DB 1st time in getCustomerDependentByCustomerId(). With Customer Id:" + customerId);
+		
+		CustomerDependent custdep[] = m_customerDependentDao.getCutomerDependentByCustomerId(customerId);
+		
+		Map<Integer, CustomerDependent>  custDepMapWithId 
+		   = Stream.of(custdep)
+		        .collect(
+		            Collectors.toMap(x -> x.getId(), x -> x));
+
+
+		
+		
+		//HashMap<Integer, Map <Integer, CustomerDependent>> custdepMapWithCustomerId = new HashMap<>();
+		
+		//custdepMapWithCustomerId.put(customerId, custDepMapWithId);
+		
+		
+		return custDepMapWithId;
 	}	
 
 	
@@ -83,7 +105,7 @@ public class CustomerService {
 
 	@Cacheable(value = "customerCache2", key = "#id", unless = "#result==null")
 	public Optional<Customer> getCustomer2(int id) {
-		System.out.println("Customers Cache 2. Hit DB 1st time in getCustomer2()");
+		System.out.println("Customers Cache 2. Hit DB 1st time in getCustomer2(). With Customer Id:" + id);
 		return repository.findById(id);
 	}
 

@@ -2,6 +2,7 @@ package com.jayzConsulting.spring.cache.api.controller;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,11 @@ public class CustomerController {
 
 	@GetMapping("/getCustomerDependentByCustomerId/{id}")
 	public CustomerDependent[] getCustomerDependentByCustomerId(@PathVariable int id) {
-		return service.getCutomerDependentByCustomerId(id);
+		
+		
+		 Map<Integer, CustomerDependent>  custDepMapWithId = service.getCutomerDependentByCustomerId(id);
+		 
+		 return custDepMapWithId.values().toArray(new CustomerDependent[custDepMapWithId.size()] );
 	}
 
 
